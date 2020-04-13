@@ -2,26 +2,26 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
     labels:
-        app: solo-microservice
+        app: sara-solo-microservice
         stack: frontend
         source: demo
-    name: solo-microservice
+    name: sara-solo-microservice
     namespace: microservices
 spec:
     replicas: 3
     selector:
         matchLabels:
-            run: solo-microservice
+            run: sara-solo-microservice
     template:
         metadata:
             labels:
-                app: solo-microservice
-                run: solo-microservice
+                app: sara-solo-microservice
+                run: sara-solo-microservice
                 source: demo
         spec:
             containers:
-                -   image: 219099013464.dkr.ecr.us-west-2.amazonaws.com/solo-microservice
-                    name: solo-microservice
+                -   image: 219099013464.dkr.ecr.us-west-2.amazonaws.com/sara-solo-microservice
+                    name: sara-solo-microservice
                     ports:
                         -   name: web
                             containerPort: 8080
@@ -31,13 +31,13 @@ kind: Service
 apiVersion: v1
 metadata:
     labels:
-        app: solo-microservice-service
-    name: solo-microservice-service
+        app: sara-solo-microservice-service
+    name: sara-solo-microservice-service
     namespace: microservices
 spec:
     selector:
         source: demo
-        app: solo-microservice
+        app: sara-solo-microservice
     ports:
         -   name: web
             protocol: TCP
@@ -51,15 +51,15 @@ kind: Ingress
 metadata:
     annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
-    name: solo-ingress
+    name: sara-solo-ingress
     namespace: microservices
 spec:
     rules:
         -   http:
                 paths:
-                    -   path: /solo(/|$)(.*)
+                    -   path: /sara-solo(/|$)(.*)
                         backend:
-                            serviceName: solo-microservice-service
+                            serviceName: sara-solo-microservice-service
                             servicePort: 30201
 
 
